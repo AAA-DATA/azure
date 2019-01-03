@@ -464,7 +464,7 @@ function get_active_ambari_host()
 
 #---BEGIN MAIN PROGRAM-------------------------------------------------------------------------------------------------------------------------------------------------------
 
-AMBARICONFIGS_SH=/var/lib/ambari-server/resources/scripts/configs.sh
+AMBARICONFIGS_SH=/var/lib/ambari-server/resources/scripts/configs.py
 
 # Get the watchdog username and password, we will use this account to create the users and groups in Ambari
 USERID=$(sudo python -c "import hdinsight_common.Constants as Constants;print Constants.AMBARI_WATCHDOG_USERNAME")
