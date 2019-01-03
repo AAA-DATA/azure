@@ -480,7 +480,7 @@ ACTIVEAMBARIHOST=$(get_active_ambari_host $USERID $PASSWD)
 STORAGE_ACCOUNT_LIST=$(bash $AMBARICONFIGS_SH -u $USERID -p $PASSWD get $ACTIVEAMBARIHOST $CLUSTERNAME core-site | grep 'blob.core' |  grep keyprovider | cut -d":" -f1 | tr -d '"','' | sed "s/fs.azure.account.keyprovider.//g")
 log "Retrieved storage account list $STORAGE_ACCOUNT_LIST"
 for STORAGE_ACCOUNT in $STORAGE_ACCOUNT_LIST; do
-  if [ $(echo $STORAGE_ACCOUNT | grep staaadatahdinsight ) ]; then
+  if [ $(echo $STORAGE_ACCOUNT | grep aaadlsdev ) ]; then
 
    SCRIPT_STORAGE_ACCOUNT=$STORAGE_ACCOUNT
 
