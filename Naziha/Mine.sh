@@ -476,26 +476,25 @@ CLUSTERNAME=$(python -c "import hdinsight_common.ClusterManifestParser as Cluste
 # Get the active Ambari host (we need to do this because the node that Ambari runs on can change if it fails over to a different head node)
 ACTIVEAMBARIHOST=$(get_active_ambari_host $USERID $PASSWD)
 
-
+USER_LIST_FILENAME = "user-list.csv"
 # Delete the file if it already exists
 [ -e "/tmp/${USER_LIST_FILENAME}" ] && rm "/tmp/${USER_LIST_FILENAME}"
 
 echo $USER_LIST_FILENAME
 
-#hdfs dfs -ls "wasbs://add-users@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}"
- hdfs dfs -ls adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/
+hdfs dfs -ls adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/
 
-hdfs dfs -test -e "wasbs://add-users@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}"
+hdfs dfs -test -e "adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/${USER_LIST_FILENAME}"
 
 if [ $? != 0 ]; then
 
-	log "Error the user list file does not exist on HDFS at the expected location wasbs://scripts@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}"
+	log "Error the user list file does not exist on HDFS at the expected location adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/${USER_LIST_FILENAME}"
 	exit 1
 fi
 
-log "Copying user list from Azure storage (wasbs://add-users@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}) to local file system /tmp"
+log "Copying user list from Azure storage (adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/${USER_LIST_FILENAME}) to local file system /tmp"
 
-#hdfs dfs -copyToLocal "wasbs://add-users@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}" /tmp/
+#hdfs dfs -copyToLocal "adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/${USER_LIST_FILENAME}" /tmp/
  hdfs dfs -copyToLocal "adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/user-list.csv" /tmp/
 
 
