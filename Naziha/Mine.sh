@@ -480,7 +480,7 @@ ACTIVEAMBARIHOST=$(get_active_ambari_host $USERID $PASSWD)
 STORAGE_ACCOUNT_LIST=$(bash $AMBARICONFIGS_SH -u $USERID -p $PASSWD get $ACTIVEAMBARIHOST $CLUSTERNAME core-site | grep 'blob.core' |  grep keyprovider | cut -d":" -f1 | tr -d '"','' | sed "s/fs.azure.account.keyprovider.//g")
 log "Retrieved storage account list $STORAGE_ACCOUNT_LIST"
 for STORAGE_ACCOUNT in $STORAGE_ACCOUNT_LIST; do
-  if [ $(echo $STORAGE_ACCOUNT | grep artifacts ) ]; then
+  if [ $(echo $STORAGE_ACCOUNT | grep staaadatahdinsight ) ]; then
 
    SCRIPT_STORAGE_ACCOUNT=$STORAGE_ACCOUNT
 
@@ -489,7 +489,7 @@ done
 
 if [ -z "${SCRIPT_STORAGE_ACCOUNT// }" ]; then
 
-	log "Error unable to find artifacts storage account, exiting"
+	log "Error unable to find staaadatahdinsight storage account, exiting"
 	exit 1
 fi
 log "Storage account containing user list: wasbs://scripts@${SCRIPT_STORAGE_ACCOUNT}/"
@@ -500,9 +500,9 @@ USER_LIST_FILENAME="$CLUSTERNAME-user-list.csv"
 
 echo $USER_LIST_FILENAME
 
-#hdfs dfs -ls "wasbs://scripts@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}"
+#hdfs dfs -ls "wasbs://add-users@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}"
 
-hdfs dfs -test -e "wasbs://scripts@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}"
+hdfs dfs -test -e "wasbs://add-users@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}"
 
 if [ $? != 0 ]; then
 
@@ -510,9 +510,9 @@ if [ $? != 0 ]; then
 	exit 1
 fi
 
-log "Copying user list from Azure storage (wasbs://scripts@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}) to local file system /tmp"
+log "Copying user list from Azure storage (wasbs://add-users@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}) to local file system /tmp"
 
-hdfs dfs -copyToLocal "wasbs://scripts@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}" /tmp/
+hdfs dfs -copyToLocal "wasbs://add-users@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}" /tmp/
 
 
 # create sudoers file
