@@ -482,17 +482,17 @@ USER_LIST_FILENAME = "user-list.csv"
 
 echo $USER_LIST_FILENAME
 
-hdfs dfs -ls adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/
+#hdfs dfs -ls adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/
 
-hdfs dfs -test -e "adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/${USER_LIST_FILENAME}"
+hdfs dfs -test -e "adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/user-list.csv"
 
 if [ $? != 0 ]; then
 
-	log "Error the user list file does not exist on HDFS at the expected location adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/${USER_LIST_FILENAME}"
+	log "Error the user list file does not exist on HDFS at the expected location adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/user-list.csv"
 	exit 1
 fi
 
-log "Copying user list from Azure storage (adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/${USER_LIST_FILENAME}) to local file system /tmp"
+log "Copying user list from Azure storage (adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/user-list.csv) to local file system /tmp"
 
 #hdfs dfs -copyToLocal "adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/${USER_LIST_FILENAME}" /tmp/
  hdfs dfs -copyToLocal "adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/user-list.csv" /tmp/
