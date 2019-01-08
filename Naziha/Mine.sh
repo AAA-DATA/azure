@@ -476,43 +476,26 @@ CLUSTERNAME=$(python -c "import hdinsight_common.ClusterManifestParser as Cluste
 # Get the active Ambari host (we need to do this because the node that Ambari runs on can change if it fails over to a different head node)
 ACTIVEAMBARIHOST=$(get_active_ambari_host $USERID $PASSWD)
 
-# Get a list of storage accounts
-STORAGE_ACCOUNT_LIST=$(bash $AMBARICONFIGS_SH -u $USERID -p $PASSWD get $ACTIVEAMBARIHOST $CLUSTERNAME core-site | grep 'blob.core' |  grep keyprovider | cut -d":" -f1 | tr -d '"','' | sed "s/fs.azure.account.keyprovider.//g")
-log "Retrieved storage account list $STORAGE_ACCOUNT_LIST"
-for STORAGE_ACCOUNT in $STORAGE_ACCOUNT_LIST; do
-  if [ $(echo $STORAGE_ACCOUNT | grep artifacts ) ]; then
-
-   SCRIPT_STORAGE_ACCOUNT=$STORAGE_ACCOUNT
-
-  fi
-done
-
-if [ -z "${SCRIPT_STORAGE_ACCOUNT// }" ]; then
-
-	log "Error unable to find artifacts storage account, exiting"
-	exit 1
-fi
-log "Storage account containing user list: wasbs://scripts@${SCRIPT_STORAGE_ACCOUNT}/"
-USER_LIST_FILENAME="$CLUSTERNAME-user-list.csv"
-
+USER_LIST_FILENAME = "user-list.csv"
 # Delete the file if it already exists
 [ -e "/tmp/${USER_LIST_FILENAME}" ] && rm "/tmp/${USER_LIST_FILENAME}"
 
 echo $USER_LIST_FILENAME
 
-#hdfs dfs -ls "wasbs://scripts@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}"
+#hdfs dfs -ls adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/
 
-hdfs dfs -test -e "wasbs://scripts@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}"
+hdfs dfs -test -e "adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/user-list.csv"
 
 if [ $? != 0 ]; then
 
-	log "Error the user list file does not exist on HDFS at the expected location wasbs://scripts@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}"
+	log "Error the user list file does not exist on HDFS at the expected location adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/user-list.csv"
 	exit 1
 fi
 
-log "Copying user list from Azure storage (wasbs://scripts@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}) to local file system /tmp"
+log "Copying user list from Azure storage (adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/user-list.csv) to local file system /tmp"
 
-hdfs dfs -copyToLocal "wasbs://scripts@${SCRIPT_STORAGE_ACCOUNT}/${USER_LIST_FILENAME}" /tmp/
+#hdfs dfs -copyToLocal "adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/${USER_LIST_FILENAME}" /tmp/
+ hdfs dfs -copyToLocal "adl://aaadlsdev.azuredatalakestore.net/clusters/aaa-hdi-dev/add-users/user-list.csv" /tmp/
 
 
 # create sudoers file
