@@ -116,7 +116,7 @@ do
 								
 							   token=$(curl -X POST -d 'grant_type=client_credentials&client_id=$USER_CLIENT_ID&client_secret=$USER_KEY&resource=https://vault.azure.net' https://login.microsoftonline.com/d3f969e5-42a3-4d6c-a617-7b969dd92ea1/oauth2/token | cut -d ',' -f 7 | cut -d ':' -f 2 | cut -d '"' -f 2)
 
-                               userpassword=$(curl -H "Authorization: Bearer $token" -vv https://$KEY_VAULT_NAME.vault.azure.net/secrets/$username?api-version=7.0 | cut -d ',' -f 1 | cut -d ':' -f 2 | cut -d '"' -f 2)
+                               userpassword=$(curl -H "Authorization: Bearer $token" -vv https://$KEY_VAULT_NAME.vault.azure.net/secrets/aaa-hdi-$username?api-version=7.0 | cut -d ',' -f 1 | cut -d ':' -f 2 | cut -d '"' -f 2)
 
                                echo -e "$userpassword" | passwd "$username"
                                log "Added user $username"
