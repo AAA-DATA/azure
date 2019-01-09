@@ -5,7 +5,7 @@ while (( $#> 0));do
 		if [ $1 = "admin" ]
 		then
 			#set admin credentials for ambari
-			ambariadminuser="admin"
+			ambariadminuser=$1
 			ambariadminpass=$2
 		else
 			#create Ambari user
