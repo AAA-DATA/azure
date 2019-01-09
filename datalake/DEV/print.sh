@@ -1,6 +1,6 @@
 #!/bin/bash
 #Headnode only run from one machine s
-HEADNODE=hn0-aaa-hd
+HEADNODE=hn0-aaa-hd.1jiaglngizmehct0hz2vcvam2a.ax.internal.cloudapp.net
 while (( $#> 0));do
 		if [ $1 = "admin" ]
 		then
