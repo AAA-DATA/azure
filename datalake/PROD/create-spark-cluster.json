@@ -189,20 +189,13 @@
             "metadata": {
                 "description": "The password of the certificate used by private Key"
             }
-        },
-        "timezone_script_uri": {
-            "type": "securestring",
-            "defaultValue": "https://staaadatahdinsight.blob.core.windows.net/scripts/Timezone.sh",
-            "metadata": {
-                "description": "Script URI"
-            }
         }
     },
     "variables": {
         "vnet_id": "[concat('/subscriptions/', parameters('subscription_id'),'/resourceGroups/', parameters('vnet_resource_group_name'),'/providers/Microsoft.Network/virtualNetworks/', parameters('vnet_name'))]",
         "vnet_subnet_id": "[concat('/subscriptions/', parameters('subscription_id'),'/resourceGroups/', parameters('vnet_resource_group_name'),'/providers/Microsoft.Network/virtualNetworks/', parameters('vnet_name'),'/subnets/', parameters('vnet_subnet_name'))]",
         "hostname_dls": "[concat( parameters('datalake_store_name'),'.azuredatalakestore.net')]",
-        "mountpoint_dls": "[concat('/clusters/', parameters('cluster_name'),'/')]",
+        "mountpoint_dls":  "[concat('/clusters/', parameters('cluster_name'),'/')]",
         "mountpoint_dtlk": "/datalake",
         "azure_ad_url": "[concat('https://login.windows.net/', parameters('tenant_id'))]"
     },
@@ -216,7 +209,7 @@
                 "Environment": "[parameters('tag_env')]",
                 "Product": "[parameters('tag_product')]",
                 "Owner": "[parameters('tag_owner')]"
-            },
+              },
             "dependsOn": [],
             "properties": {
                 "clusterVersion": "[parameters('cluster_version')]",
@@ -236,13 +229,13 @@
                         "core-site": {
                             "fs.defaultFS": "adl://home",
                             "dfs.adls.home.hostname": "[variables('hostname_dls')]",
-                            "dfs.adls.home.mountpoint": "[variables('mountpoint_dls')]",
+                            "dfs.adls.home.mountpoint":"[variables('mountpoint_dls')]",
                             "dfs.adls.datalake.mountpoint": "[variables('mountpoint_dtlk')]"
                         },
                         "clusterIdentity": {
                             "clusterIdentity.applicationId": "[parameters('application_id')]",
                             "clusterIdentity.certificate": "[parameters('identity_certificate')]",
-                            "clusterIdentity.aadTenantId": "[variables('azure_ad_url')]",
+                            "clusterIdentity.aadTenantId":  "[variables('azure_ad_url')]",
                             "clusterIdentity.resourceUri": "https://datalake.azure.net/",
                             "clusterIdentity.certificatePassword": "[parameters('identity_certificate_password')]"
                         }
@@ -251,12 +244,13 @@
                 "storageProfile": {
                     "storageaccounts": []
                 },
+                
                 "computeProfile": {
                     "roles": [
                         {
                             "name": "headnode",
                             "minInstanceCount": 1,
-                            "targetInstanceCount": "[parameters('head_instance_count')]",
+                            "targetInstanceCount":"[parameters('head_instance_count')]",
                             "hardwareProfile": {
                                 "vmSize": "[parameters('head_vm_size')]"
                             },
@@ -271,13 +265,8 @@
                                 "subnet": "[variables('vnet_subnet_id')]"
                             },
                             "scriptActions": [
-                                {
-                                    "name": "timezone",
-                                    "uri": "[parameters('timezone_script_uri')]",
-                                    "parameters": ""
-                                }
-                            ]
-                        },
+                    ]
+                },
                         {
                             "name": "workernode",
                             "minInstanceCount": 1,
@@ -295,13 +284,7 @@
                                 "id": "[variables('vnet_id')]",
                                 "subnet": "[variables('vnet_subnet_id')]"
                             },
-                            "scriptActions": [
-                                {
-                                    "name": "timezone",
-                                    "uri": "[parameters('timezone_script_uri')]",
-                                    "parameters": ""
-                                }
-                            ]
+                            "scriptActions": []
                         },
                         {
                             "name": "zookeepernode",
@@ -312,20 +295,14 @@
                             "osProfile": {
                                 "linuxOperatingSystemProfile": {
                                     "username": "[parameters('ssh_username')]",
-                                    "password": "[parameters('ssh_password')]"
+                                    "password": "[parameters('ssh_password')]"  
                                 }
                             },
                             "virtualNetworkProfile": {
                                 "id": "[variables('vnet_id')]",
                                 "subnet": "[variables('vnet_subnet_id')]"
                             },
-                            "scriptActions": [
-                                {
-                                    "name": "timezone",
-                                    "uri": "[parameters('timezone_script_uri')]",
-                                    "parameters": ""
-                                }
-                            ]
+                            "scriptActions": []
                         }
                     ]
                 }
@@ -333,4 +310,3 @@
         }
     ]
 }
-
