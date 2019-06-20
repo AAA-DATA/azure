@@ -227,9 +227,9 @@
                 "description": "Script URI"
             }
         },
-          "yarnlogs_script_uri": {
+          "hdinsightlogs_script_uri": {
             "type": "securestring",
-            "defaultValue": "https://staaadatahdinsight.blob.core.windows.net/scripts/YarnLogs.sh",
+            "defaultValue": "https://staaadatahdinsight.blob.core.windows.net/scripts/HDInsight-Logs.sh",
             "metadata": {
                 "description": "Script URI"
             }
@@ -318,8 +318,8 @@
                                     "parameters": ""
                                 },
                                   {
-                                    "name": "yarnlogs",
-                                    "uri": "[parameters('yarnlogs_script_uri')]",
+                                    "name": "hdinsightlogs",
+                                    "uri": "[parameters('hdinsightlogs_script_uri')]",
                                     "parameters": ""
                                 }
 
@@ -347,12 +347,8 @@
                                     "name": "timezone",
                                     "uri": "[parameters('timezone_script_uri')]",
                                     "parameters": ""
-                                },
-                                  {
-                                    "name": "yarnlogs",
-                                    "uri": "[parameters('yarnlogs_script_uri')]",
-                                    "parameters": ""
                                 }
+                                  
 
                             ]
                         },
@@ -376,11 +372,6 @@
                                 {
                                     "name": "timezone",
                                     "uri": "[parameters('timezone_script_uri')]",
-                                    "parameters": ""
-                                },
-                                  {
-                                    "name": "yarnlogs",
-                                    "uri": "[parameters('yarnlogs_script_uri')]",
                                     "parameters": ""
                                 }
 
