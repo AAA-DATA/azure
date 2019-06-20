@@ -190,9 +190,9 @@
                 "description": "The password of the certificate used by private Key"
             }
         },
-         "yarnlogs_script_uri": {
+         "hdinsightlogs_script_uri": {
             "type": "securestring",
-            "defaultValue": "https://staaadatahdinsight.blob.core.windows.net/scripts/YarnLogs.sh",
+            "defaultValue": "https://staaadatahdinsight.blob.core.windows.net/scripts/HDInsight-Logs.sh",
             "metadata": {
                 "description": "Script URI"
             }
@@ -273,9 +273,9 @@
                                 "subnet": "[variables('vnet_subnet_id')]"
                             },
                             "scriptActions": [
-                                  {
-                                    "name": "yarnlogs",
-                                    "uri": "[parameters('yarnlogs_script_uri')]",
+                               {
+                                    "name": "hdinsightlogs",
+                                    "uri": "[parameters('hdinsightlogs_script_uri')]",
                                     "parameters": ""
                                 }
 
@@ -299,11 +299,7 @@
                                 "subnet": "[variables('vnet_subnet_id')]"
                             },
                             "scriptActions": [
-                              {
-                                    "name": "yarnlogs",
-                                    "uri": "[parameters('yarnlogs_script_uri')]",
-                                    "parameters": ""
-                                }
+                              
 
                             ]
                         },
@@ -324,11 +320,7 @@
                                 "subnet": "[variables('vnet_subnet_id')]"
                             },
                             "scriptActions": [
-                              {
-                                    "name": "yarnlogs",
-                                    "uri": "[parameters('yarnlogs_script_uri')]",
-                                    "parameters": ""
-                                }
+                             
 ]
                         }
                     ]
