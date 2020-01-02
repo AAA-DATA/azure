@@ -219,8 +219,14 @@
             "metadata": {
                 "description": "The domain Username who will be admin by default in hdinsight"
             }
+        },
+        "timezone_script_uri": {
+            "type": "securestring",
+            "defaultValue": "https://staaadatahdinsight.blob.core.windows.net/scripts/Timezone.sh",
+            "metadata": {
+                "description": "Script URI"
+            }
         }
-
     },
     "variables": {
         "vnet_id": "[concat('/subscriptions/', parameters('subscription_id'),'/resourceGroups/', parameters('vnet_resource_group_name'),'/providers/Microsoft.Network/virtualNetworks/', parameters('vnet_name'))]",
