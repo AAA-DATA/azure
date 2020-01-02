@@ -226,14 +226,8 @@
             "metadata": {
                 "description": "Script URI"
             }
-        },
-      "hdinsightlogs_script_uri": {
-            "type": "securestring",
-            "defaultValue": "https://staaadatahdinsight.blob.core.windows.net/scripts/HDInsight-Logs.sh",
-            "metadata": {
-                "description": "Script URI"
-            }
         }
+     
     },
     "variables": {
         "vnet_id": "[concat('/subscriptions/', parameters('subscription_id'),'/resourceGroups/', parameters('vnet_resource_group_name'),'/providers/Microsoft.Network/virtualNetworks/', parameters('vnet_name'))]",
@@ -314,11 +308,6 @@
                                 {
                                     "name": "timezone",
                                     "uri": "[parameters('timezone_script_uri')]",
-                                    "parameters": ""
-                                },
-                                 {
-                                    "name": "hdinsightlogs",
-                                    "uri": "[parameters('hdinsightlogs_script_uri')]",
                                     "parameters": ""
                                 }
                             ]
