@@ -226,13 +226,6 @@
             "metadata": {
                 "description": "Script URI"
             }
-        },
-          "hdinsightlogs_script_uri": {
-            "type": "securestring",
-            "defaultValue": "https://staaadatahdinsight.blob.core.windows.net/scripts/HDInsight-Logs.sh",
-            "metadata": {
-                "description": "Script URI"
-            }
         }
 
     },
@@ -316,13 +309,7 @@
                                     "name": "timezone",
                                     "uri": "[parameters('timezone_script_uri')]",
                                     "parameters": ""
-                                },
-                                   {
-                                    "name": "hdinsightlogs",
-                                    "uri": "[parameters('hdinsightlogs_script_uri')]",
-                                    "parameters": ""
                                 }
-
                             ]
                         },
                         {
